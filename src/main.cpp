@@ -1,12 +1,14 @@
 #include <iostream>
 #include "Prase_flag.h"
+#include "Simulator.h"
 
 using namespace std;
 
 int main(int argc, char **argv) {
-    phrase_flag(argc, argv);
+    Simulator sim(phrase_flag(argc, argv));
+    sim.loadFromFile();
+sim.startSim();
 
-    cout << "Hello world!" << endl;
 
     return 0;
 }

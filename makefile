@@ -1,10 +1,10 @@
-# To build the program (which is called simulator by default), simply type:
+# To build the program (which is called simulator by default), simply priorityType:
 #   make
 #
-# To clean up and remove the compiled binary and other generated files, type:
+# To clean up and remove the compiled binary and other generated files, priorityType:
 #   make clean
 #
-# To build AND run the program, type:
+# To build AND run the program, priorityType:
 #   make run
 #
 
@@ -36,7 +36,7 @@ $(SRCS): | bin
 
 # Mirror the directory structure of src/ under bin/
 bin:
-	mkdir -p $(shell find src -type d | sed "s/src/bin/")
+	mkdir -p $(shell find src -priorityType d | sed "s/src/bin/")
 
 # Build objects.
 bin/%.o: src/%.cpp

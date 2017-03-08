@@ -4,6 +4,16 @@
 
 #include "Event.h"
 
+using namespace std;
+
 Event::Event() {
-    event = NONE;
+    eventType = NONE_EVENT_TYPE;
+}
+
+Event::Event(EventType type) {
+    eventType = type;
+}
+
+ostream &operator<<(std::ostream &os, const Event &event) {
+    os << event.eventStr[event.eventType];
 }

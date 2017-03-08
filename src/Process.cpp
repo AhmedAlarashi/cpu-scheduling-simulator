@@ -11,9 +11,9 @@ using namespace std;
  * Initialize a process
  */
 Process::Process() {
-    processID = INT_MAX;
+    processID = 0;
     numThread = 0;
-    type = NONE;
+    priorityType = 0;
 }
 
 /**
@@ -22,9 +22,9 @@ Process::Process() {
  * @param type      Priority type of the process
  * @param numThread Number of thread the process has
  */
-Process::Process(size_t ID, Priority type, size_t numThread) {
+Process::Process(size_t ID, size_t type, size_t numThread) {
     this->processID = ID;
-    this->type = type;
+    this->priorityType = type;
     this->numThread = numThread;
 
     this->threads.resize(numThread);

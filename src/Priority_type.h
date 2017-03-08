@@ -10,7 +10,8 @@ enum Priority {
     INTERACTIVE,
     NORMAL,
     BATCH,
-    NONE
 };
+
+const char *PriorityStr[] = {"[SYSTEM]", "[INTERACTIVE]", "[NORMAL]", "[BATCH]"};
 
 #endif //CPU_SCHEDULING_SIMULATOR_PRIORITY_H

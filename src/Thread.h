@@ -6,12 +6,17 @@
 #define CPU_SCHEDULING_SIMULATOR_THREAD_H
 
 #include <vector>
+#include <cstddef>
 #include "Brust.h"
 
 class Thread {
 public:
     Thread();
 
+    size_t arriveTime;
+    size_t threadID;
+    size_t processID;
+    size_t numBrust;
     std::vector<Brust> brusts;
 };
 

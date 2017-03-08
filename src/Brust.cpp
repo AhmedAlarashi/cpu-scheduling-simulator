@@ -5,6 +5,6 @@
 #include "Brust.h"
 
 Brust::Brust(){
-    cpu_brust = 0;
-    io_brust = 0;
+    cpu = 0;
+    io = 0;
 }

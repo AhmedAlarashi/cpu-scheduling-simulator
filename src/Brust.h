@@ -6,12 +6,14 @@
 #define CPU_SCHEDULING_SIMULATOR_BRUST_H
 
 
+#include <cstddef>
+
 class Brust {
 public:
     Brust();
 
-    int cpu_brust;
-    int io_brust;
+    size_t cpu;
+    size_t io;
 };
 
 

@@ -11,7 +11,7 @@ enum State {
     RUNNING,
     BLOCKED,
     EXIT,
-    NONE
+    NONE_EVENT_TYPE
 };
 
 #endif //CPU_SCHEDULING_SIMULATOR_SCHEDULE_STATE_H
