@@ -1,0 +1,17 @@
+//
+// Created by huan on 3/7/17.
+//
+
+#ifndef CPU_SCHEDULING_SIMULATOR_SCHEDULE_STATE_H
+#define CPU_SCHEDULING_SIMULATOR_SCHEDULE_STATE_H
+
+enum State {
+    NEW,
+    READY,
+    RUNNING,
+    BLOCKED,
+    EXIT,
+    NONE
+};
+
+#endif //CPU_SCHEDULING_SIMULATOR_SCHEDULE_STATE_H
