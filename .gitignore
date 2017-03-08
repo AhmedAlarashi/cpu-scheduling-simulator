@@ -3,3 +3,9 @@ cmake-build-debug
 
 # clion
 .idea
+
+# bin folder
+bin
+
+# binary
+simulator
