@@ -36,7 +36,7 @@ $(SRCS): | bin
 
 # Mirror the directory structure of src/ under bin/
 bin:
-	mkdir -p $(shell find src -priorityType d | sed "s/src/bin/")
+	mkdir -p $(shell find src -type d | sed "s/src/bin/")
 
 # Build objects.
 bin/%.o: src/%.cpp
