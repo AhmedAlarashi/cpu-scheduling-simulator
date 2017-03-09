@@ -6,7 +6,6 @@
 #define CPU_SCHEDULING_SIMULATOR_PRASE_FLAG_H
 
 #include <stdlib.h>
-#include <getopt.h>
 
 enum Algorithm {
     FCFS,

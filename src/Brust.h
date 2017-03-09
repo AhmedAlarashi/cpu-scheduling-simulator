@@ -5,7 +5,6 @@
 #ifndef CPU_SCHEDULING_SIMULATOR_BRUST_H
 #define CPU_SCHEDULING_SIMULATOR_BRUST_H
 
-
 #include <cstddef>
 
 class Brust {
@@ -15,6 +14,5 @@ public:
     size_t cpu;
     size_t io;
 };
-
 
 #endif //CPU_SCHEDULING_SIMULATOR_BRUST_H

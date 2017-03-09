@@ -2,7 +2,6 @@
 // Created by huan on 3/7/17.
 //
 
-#include <climits>
 #include "Process.h"
 
 using namespace std;
@@ -36,6 +35,6 @@ Process::Process(size_t ID, size_t type, size_t numThread) {
  * @param arrive_time
  * @param numBrust
  */
-void Process::setThread(size_t idx, size_t arrive_time, size_t numBrust){
+void Process::setThread(size_t idx, size_t arrive_time, size_t numBrust) {
 
 }

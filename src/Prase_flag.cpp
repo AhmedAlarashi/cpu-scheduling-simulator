@@ -4,8 +4,8 @@
 
 #include "Prase_flag.h"
 #include <iostream>
-#include <getopt.h>
 #include <cstring>
+#include <getopt.h>
 
 using namespace std;
 
