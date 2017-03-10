@@ -15,5 +15,5 @@ Event::Event(EventType type) {
 }
 
 ostream &operator<<(std::ostream &os, const Event &event) {
-    os << event.eventStr[event.eventType];
+   return os << event.eventStr[event.eventType];
 }

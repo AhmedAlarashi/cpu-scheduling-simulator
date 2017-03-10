@@ -34,19 +34,19 @@ void print_usage() {
 //TODO add custom algo
 Algorithm validate_algo(char *str) {
     if (!strcmp("FCFS", str)) {
-        cout << "FCFS" << endl;
+       // cout << "FCFS" << endl;
         return FCFS;
     }
     if (!strcmp("RR", str)) {
-        cout << "RR" << endl;
+      //  cout << "RR" << endl;
         return RR;
     }
     if (!strcmp("PRIORITY", str)) {
-        cout << "PRIORITY" << endl;
+       // cout << "PRIORITY" << endl;
         return PRIORITY;
     }
     if (!strcmp("abcd", str)) {
-        cout << "asdsad" << endl;
+      //  cout << "asdsad" << endl;
         return FCFS;
     }
     cerr << "ERROR: Unknown algorithm: " << str << endl;
@@ -86,7 +86,7 @@ Operation phrase_flag(int argc, char **argv) {
     }
     result.INFILE = argv[argc - 1];
 
-    cout << "File name: " << result.INFILE << endl;
+    //cout << "File name: " << result.INFILE << endl;
 
     return result;
 }
