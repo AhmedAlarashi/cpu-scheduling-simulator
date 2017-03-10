@@ -9,6 +9,7 @@
 #include <cstddef>
 #include "Brust.h"
 
+// TODO: brust may be better with queue
 class Thread {
 public:
     Thread();
