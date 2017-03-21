@@ -22,6 +22,8 @@
 #include "Prase_flag.h"
 #include "Process.h"
 #include "Event.h"
+#include "scheduling_algo/Scheduling_algorithm.h"
+#include "scheduling_algo/algo_FCFS.h"
 
 using namespace std;
 
@@ -39,6 +41,8 @@ public:
 
 private:
     // functions
+    void choose_scheduling_algorithm();
+
     void loadFromFile();
 
     Process loadProcess(istream &in);
@@ -49,7 +53,6 @@ private:
 
     void populateNewQueue();
 
-    void verboseMsg(size_t time, size_t processID, size_t threadID, Event event);
     void verboseMsg(const Event & event);
 
     // Parameters
@@ -66,6 +69,7 @@ private:
     vector<Process> processes;
 
     priority_queue<Event, vector<Event>, std::greater<Event>> newQueue;
+    Scheduling_algorithm *scheduling;
 };
 
 

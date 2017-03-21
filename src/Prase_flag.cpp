@@ -25,7 +25,7 @@ void print_usage() {
          << endl;
     cout << "  -v, --verbose:" << endl << "\tIf set, outputs all state transitions and scheduling choices." << endl;
     cout << "  -a, --algorithm <algorithm>:" << endl << "\tThe scheduling algorithm to use. Valid values are:" << endl;
-    cout << "  \tFCFS: first-come, first-serve (default)" << endl
+    cout << "  \talgo_FCFS: first-come, first-serve (default)" << endl
          << "  \tRR: round-robin scheduling" << endl
          << "  \tPRIORITY: priority scheduling" << endl
          << "  \tNOT YET IMPLEMENTED" << endl;
@@ -33,8 +33,8 @@ void print_usage() {
 
 //TODO add custom algo
 Algorithm validate_algo(char *str) {
-    if (!strcmp("FCFS", str)) {
-       // cout << "FCFS" << endl;
+    if (!strcmp("algo_FCFS", str)) {
+       // cout << "algo_FCFS" << endl;
         return FCFS;
     }
     if (!strcmp("RR", str)) {

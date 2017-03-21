@@ -9,9 +9,9 @@
 
 class Scheduling_algorithm {
 public:
-    virtual void add(Thread &thread) = 0;
+    virtual void add(Thread *thread) = 0;
 
-    virtual const Thread &dispatch() = 0;
+    virtual const Thread *dispatch() = 0;
 };
 
 #endif //CPU_SCHEDULING_SIMULATOR_SCHEDULING_ALGORITHM_H

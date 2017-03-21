@@ -14,6 +14,15 @@ Simulator::Simulator(const Operation opt) {
     this->verbose = opt.VERBOSE;
 }
 
+void Simulator::choose_scheduling_algorithm() {
+    if (algorithm == Algorithm::FCFS)
+        scheduling = new algo_FCFS;
+    else {
+        cout << "No matching algorithm provided" <<endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
 void Simulator::loadFromFile() {
     ifstream fin(inputfile);
     if (!fin) {
@@ -38,10 +47,8 @@ Process Simulator::loadProcess(istream &in) {
     process.numThread = numThread;
     process.priorityType = type;
 
-    for (size_t i = 0; i < numThread; ++i) {
+    for (size_t i = 0; i < numThread; ++i)
         process.threads.push_back(loadThread(in, process, i));
-    }
-    cout << process.threads.size()<<endl;
 
     return process;
 }
@@ -77,6 +84,8 @@ Brust Simulator::loadBrust(istream &in, bool lastOne) {
 }
 
 void Simulator::startSim() {
+    cout << "choosing scheduling algorithm" << endl;
+    choose_scheduling_algorithm();
     cout << "loading file" << endl;
     loadFromFile();
     cout << "populating New Queue" << endl;
@@ -100,18 +109,10 @@ void Simulator::populateNewQueue() {
     }
 }
 
-void Simulator::verboseMsg(size_t time, size_t processID, size_t threadID, Event event) {
-    cout << "At time " << time << ":" << endl
-         << "\t" << event << endl
-         << "\tThread " << threadID << " in process " << processID << " "
-         << PriorityStr[processes[processID].priorityType] << endl
-         << "\tThread arrived." << endl << endl;
-}
-
 void Simulator::verboseMsg(const Event &event) {
-    cout << "At time " << event.eventTime << ":" << endl
-         << "\t" << event << endl
-         << "\tThread " << event.threadID << " in process " << event.processID << " "
-         << PriorityStr[event.priorityType] << endl
-         << "\tThread arrived." << endl << endl;
+//    cout << "At time " << event.eventTime << ":" << endl
+//         << "\t" << event << endl
+//         << "\tThread " << event.threadID << " in process " << event.processID << " "
+//         << PriorityStr[event.priorityType] << endl
+//         << "\tThread arrived." << endl << endl;
 }
