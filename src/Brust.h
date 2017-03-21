@@ -9,7 +9,10 @@
 
 class Brust {
 public:
-    Brust();
+    Brust(){
+        cpu = 0;
+        io = 0;
+    }
 
     size_t cpu;
     size_t io;

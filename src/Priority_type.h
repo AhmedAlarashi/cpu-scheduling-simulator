@@ -12,12 +12,13 @@
 //    BATCH,
 //};
 
-#define SYSTEM 0
-#define INTERACTIVE 1
-#define NORMAL 2
-#define BATCH 3
+#include <cstdlib>
 
-//const char *PriorityStr[]; = {"[SYSTEM]", "[INTERACTIVE]", "[NORMAL]", "[BATCH]"};
+const size_t SYSTEM = 0;
+const size_t INTERACTIVE = 1;
+const size_t NORMAL = 2;
+const size_t BATCH = 3;
+
 extern const char *PriorityStr[];
 
 #endif //CPU_SCHEDULING_SIMULATOR_PRIORITY_H

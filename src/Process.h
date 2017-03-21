@@ -11,10 +11,13 @@
 
 class Process {
 public:
-    Process();
-    Process(size_t ID, size_t type, size_t numThread);
+    Process(){
+        processID = 0;
+        numThread = 0;
+        priorityType = 0;
+    }
 
-    void setThread(size_t idx, size_t arrive_time, size_t numBrust);
+    void setThread(size_t idx, size_t arrive_time, size_t numBrust){}
 
     // data
     size_t processID;

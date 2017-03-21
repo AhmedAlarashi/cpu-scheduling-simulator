@@ -12,11 +12,12 @@
 // TODO: brust may be better with queue
 class Thread {
 public:
-    Thread();
+    Thread() {}
 
     size_t arriveTime;
     size_t threadID;
     size_t processID;
+    size_t priorityType;
     size_t numBrust;
     std::vector<Brust> brusts;
 };
