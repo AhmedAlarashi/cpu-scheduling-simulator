@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <map>
 #include <vector>
 #include <string>
@@ -45,13 +46,21 @@ private:
 
     void loadFromFile();
 
+    void populateNewQueue();
+
+    void advance();
+
+    void event_handler(const Event & event);
+
+    Event get_next_event();
+
     Process loadProcess(istream &in);
 
     Thread loadThread(istream &in, Process &process, size_t threadID);
 
     Brust loadBrust(istream &in, bool lastOne);
 
-    void populateNewQueue();
+
 
     void verboseMsg(const Event & event);
 
@@ -62,14 +71,25 @@ private:
     string inputfile;
 
     // data
+    bool has_running_or_scheduled_thread = false;
+
+    size_t system_time;
+    size_t last_processID;
+    size_t last_CPU_finish_time;
     size_t numProcess;
     size_t threadOverhead;
     size_t processOverhead;
 
     vector<Process> processes;
 
-    priority_queue<Event, vector<Event>, std::greater<Event>> newQueue;
+    priority_queue<Event, vector<Event>, std::greater<Event>> eventTracker;
+
     Scheduling_algorithm *scheduling;
+
+    // string streams
+    ostringstream verbose_buffer;
+    ostringstream normal_buffer;
+    ostringstream per_thread_buffer;
 };
 
 
