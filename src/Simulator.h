@@ -50,7 +50,7 @@ private:
 
     void advance();
 
-    void event_handler(const Event & event);
+    void event_handler(const Event &event);
 
     Event get_next_event();
 
@@ -60,9 +60,13 @@ private:
 
     Brust loadBrust(istream &in, bool lastOne);
 
+    void normalMsg();
 
+    void perthreadMsg();
 
-    void verboseMsg(const Event & event);
+    void verboseMsg(const Event &event);
+
+    void usage_analysis();
 
     // Parameters
     bool verbose;
@@ -75,7 +79,6 @@ private:
 
     size_t system_time;
     size_t last_processID;
-    size_t last_CPU_finish_time;
     size_t numProcess;
     size_t threadOverhead;
     size_t processOverhead;
@@ -84,13 +87,20 @@ private:
 
     priority_queue<Event, vector<Event>, std::greater<Event>> eventTracker;
 
-    Scheduling_algorithm *scheduling;
+    Scheduling_algorithm *scheduler;
+
+    //statistics
+    size_t total_service_time = 0,
+            total_io_time = 0,
+            total_dispatch_time = 0,
+            total_idle_time = 0,
+            total_elapsed_time = 0;
+    double CPU_utility, CPU_efficiency;
 
     // string streams
     ostringstream verbose_buffer;
     ostringstream normal_buffer;
     ostringstream per_thread_buffer;
 };
-
 
 #endif //CPU_SCHEDULING_SIMULATOR_SIMULATOR_H

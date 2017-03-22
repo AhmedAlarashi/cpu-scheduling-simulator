@@ -4,6 +4,7 @@
 
 #include "Simulator.h"
 #include "Priority_type.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -15,13 +16,12 @@ Simulator::Simulator(const Operation opt) {
 
     // initialize system time and last_processId (set to INT_MAX just act as a rubbish data)
     system_time = 0;
-    last_CPU_finish_time = 0;
     last_processID = INT32_MAX;
 }
 
 void Simulator::choose_scheduling_algorithm() {
     if (algorithm == Algorithm::FCFS)
-        scheduling = new algo_FCFS;
+        scheduler = new algo_FCFS;
     else {
         cout << "No matching algorithm provided" << endl;
         exit(EXIT_FAILURE);
@@ -109,32 +109,33 @@ void Simulator::event_handler(const Event &event) {
     if (verbose) verboseMsg(event);
     system_time = event.eventTime;
 
+    size_t io_brust_time;
     Thread *thread = &processes[event.processID].threads[event.threadID];
     switch (event.eventType) {
         case THREAD_ARRIVED:
-            scheduling->add(thread);
+            scheduler->add(thread);
             break;
 
         case THREAD_DISPATCH_COMPLETED:
         case PROCESS_DISPATCH_COMPLETED:
-            eventTracker.push(scheduling->execute(system_time));
+            eventTracker.push(scheduler->execute(system_time));
             break;
 
         case CPU_BRUST_COMPLETED:
+            total_service_time += (system_time - thread->lastexecuteTime);
             has_running_or_scheduled_thread = false;
-//            if (thread->is_last_brust())
-//                eventTracker.push(Event(system_time, THREAD_COMPLETED, *thread));
-//            else {
-            system_time += thread->next_IO_brust();
+            io_brust_time = thread->next_IO_brust();
+            system_time += io_brust_time;
+            total_io_time += io_brust_time;
             eventTracker.push(Event(system_time, IO_BRUST_COMPLETED, *thread));
-            // }
             break;
 
         case IO_BRUST_COMPLETED:
-            scheduling->add(thread);
+            scheduler->add(thread);
             break;
 
         case THREAD_COMPLETED:
+            total_service_time += (system_time - thread->lastexecuteTime);
             has_running_or_scheduled_thread = false;
             thread->finishTime = system_time;
             break;
@@ -148,13 +149,15 @@ void Simulator::event_handler(const Event &event) {
             has_running_or_scheduled_thread = true;
             if (last_processID == event.processID) {
                 system_time += threadOverhead;
+                total_dispatch_time += threadOverhead;
                 eventType = THREAD_DISPATCH_COMPLETED;
             } else {
                 last_processID = event.processID;
                 system_time += processOverhead;
+                total_dispatch_time += processOverhead;
                 eventType = PROCESS_DISPATCH_COMPLETED;
             }
-            thread = scheduling->dispatch();
+            thread = scheduler->dispatch();
             eventTracker.push(Event(system_time, eventType, *thread));
             break;
     }
@@ -168,15 +171,18 @@ void Simulator::event_handler(const Event &event) {
 void Simulator::advance() {
     Event event = get_next_event();
     event_handler(event);
-    if (!has_running_or_scheduled_thread && scheduling->has_ready_thread()) {
-        Thread *thread = scheduling->peek_next();
+    if (!has_running_or_scheduled_thread && scheduler->has_ready_thread()) {
+        Thread *thread = scheduler->peek_next();
         eventTracker.push(Event(event.eventTime, DISPATCHER_INVOKED, *thread));
         has_running_or_scheduled_thread = true;
     }
+
+    total_elapsed_time = event.eventTime;
+    total_idle_time = total_elapsed_time - total_service_time - total_dispatch_time;
 }
 
 void Simulator::startSim() {
-    // cout << "choosing scheduling algorithm" << endl << endl;
+    // cout << "choosing scheduler algorithm" << endl << endl;
     choose_scheduling_algorithm();
     // cout << "loading file" << endl << endl;
     loadFromFile();
@@ -186,14 +192,20 @@ void Simulator::startSim() {
     while (!eventTracker.empty())
         advance();
 
-    cout << verbose_buffer.str();
+    usage_analysis();
+
+    if (per_thread) perthreadMsg();
+
+    cout << "SIMULATION COMPLETED!" << endl << endl;
+
+    normalMsg();
 }
 
 void Simulator::verboseMsg(const Event &event) {
     verbose_buffer << "At time " << event.eventTime << ":" << endl
-                   << "\t" << event << endl
-                   << "\tThread " << event.threadID << " in process " << event.processID << " "
-                   << PriorityStr[event.priorityType] << endl << "\t";
+                   << "    " << event << endl
+                   << "    Thread " << event.threadID << " in process " << event.processID << " ["
+                   << PriorityStr[event.priorityType] << "]" << endl << "    ";
     switch (event.eventType) {
         case THREAD_ARRIVED:
             verbose_buffer << "Transitioned from NEW to READY";
@@ -215,8 +227,88 @@ void Simulator::verboseMsg(const Event &event) {
             verbose_buffer << "DSFSDKFJKSDLKL;DSKL;SDLKFD;SKF;SDLKCY";
             break;
         case DISPATCHER_INVOKED:
-            verbose_buffer << scheduling->to_string();
+            verbose_buffer << scheduler->to_string();
             break;
     }
     verbose_buffer << endl << endl;
+
+    cout << verbose_buffer.str();
+    verbose_buffer.clear();
+}
+
+void Simulator::normalMsg() {
+    vector<size_t> counts(4, 0);
+    vector<size_t> response_times(4, 0);
+    vector<size_t> turnaround_times(4, 0);
+
+    for (Process &p:processes) {
+        for (Thread &t:p.threads) {
+            counts[t.priorityType]++;
+            response_times[t.priorityType] += t.responseTime;
+            turnaround_times[t.priorityType] += t.turnaroundTime;
+        }
+    }
+
+    normal_buffer << fixed << setprecision(2);
+    for (int i = 0; i < 4; i++) {
+        size_t count = counts[i];
+        double avg_resp, avg_turn;
+        if (count) {
+            avg_resp = double(response_times[i]) / count;
+            avg_turn = double(turnaround_times[i]) / count;
+        } else avg_resp = avg_turn = 0.;
+
+        normal_buffer << PriorityStr[i] << " THREADS:" << endl
+                      << setw(25) << left << "    Total count:"
+                      << setw(7) << right << counts[i] << endl
+                      << setw(25) << left << "    Avg response time:"
+                      << setw(7) << right << avg_resp << endl
+                      << setw(25) << left << "    Avg turnaround time:"
+                      << setw(7) << right << avg_turn << endl << endl;
+    }
+
+    normal_buffer << setw(25) << left << "Total elapsed time:"
+                  << setw(7) << right << total_elapsed_time << endl
+                  << setw(25) << left << "Total service time:"
+                  << setw(7) << right << total_service_time << endl
+                  << setw(25) << left << "Total I/O time:"
+                  << setw(7) << right << total_io_time << endl
+                  << setw(25) << left << "Total dispatch time:"
+                  << setw(7) << right << total_dispatch_time << endl
+                  << setw(25) << left << "Total idle time:"
+                  << setw(7) << right << total_idle_time << endl;
+    normal_buffer << setw(25) << left << "CPU utilization:"
+                  << setw(6) << right << CPU_utility * 100 << "%" << endl
+                  << setw(25) << left << "CPU efficiency:"
+                  << setw(6) << right << CPU_efficiency * 100 << "%" << endl;
+
+    cout << normal_buffer.str();
+    normal_buffer.clear();
+}
+
+void Simulator::perthreadMsg() {
+    for (Process &p:processes) {
+        per_thread_buffer << "Process " << p.processID << " [" << PriorityStr[p.priorityType] << "]:" << endl;
+        for (Thread &t:p.threads) {
+            per_thread_buffer << "    Thread " << t.threadID
+                              << ":\tARR: " << setw(5) << left << t.arriveTime
+                              << "CPU: " << setw(5) << left << t.totalCPUTime
+                              << "I/O: " << setw(5) << left << t.totalIOTime
+                              << "TRT: " << setw(5) << left << t.turnaroundTime
+                              << "END: " << setw(5) << left << t.finishTime << endl << endl;
+        }
+    }
+    cout << per_thread_buffer.str();
+    per_thread_buffer.clear();
+}
+
+void Simulator::usage_analysis() {
+    for (Process &p:processes) {
+        for (Thread &t:p.threads) {
+            t.responseTime = t.startTime - t.arriveTime;
+            t.turnaroundTime = t.finishTime - t.arriveTime;
+        }
+    }
+    CPU_utility = 1.0 - double(total_idle_time) / total_elapsed_time;
+    CPU_efficiency = double(total_service_time) / total_elapsed_time;
 }

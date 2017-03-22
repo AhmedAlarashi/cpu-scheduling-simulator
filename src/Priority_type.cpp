@@ -4,4 +4,4 @@
 
 #include "Priority_type.h"
 
-const char *PriorityStr[] = {"[SYSTEM]", "[INTERACTIVE]", "[NORMAL]", "[BATCH]"};
+const char *PriorityStr[] = {"SYSTEM", "INTERACTIVE", "NORMAL", "BATCH"};

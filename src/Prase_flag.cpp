@@ -23,11 +23,11 @@ void print_usage() {
     cout << "  -h, --help:" << endl << "\tPrint this help message and exit" << endl;
     cout << "  -t, --per_thread:" << endl << "\tIf set, outputs per-thread metrics " << "at the end of the simulation."
          << endl;
-    cout << "  -v, --verbose:" << endl << "\tIf set, outputs all state transitions and scheduling choices." << endl;
-    cout << "  -a, --algorithm <algorithm>:" << endl << "\tThe scheduling algorithm to use. Valid values are:" << endl;
+    cout << "  -v, --verbose:" << endl << "\tIf set, outputs all state transitions and scheduler choices." << endl;
+    cout << "  -a, --algorithm <algorithm>:" << endl << "\tThe scheduler algorithm to use. Valid values are:" << endl;
     cout << "  \talgo_FCFS: first-come, first-serve (default)" << endl
-         << "  \tRR: round-robin scheduling" << endl
-         << "  \tPRIORITY: priority scheduling" << endl
+         << "  \tRR: round-robin scheduler" << endl
+         << "  \tPRIORITY: priority scheduler" << endl
          << "  \tNOT YET IMPLEMENTED" << endl;
 }
 
