@@ -9,13 +9,10 @@
 
 class Brust {
 public:
-    Brust(){
-        cpu = 0;
-        io = 0;
-    }
+    Brust(){}
 
-    size_t cpu;
-    size_t io;
+    size_t cpu = 0;
+    size_t io = 0;
 };
 
 #endif //CPU_SCHEDULING_SIMULATOR_BRUST_H

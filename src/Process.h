@@ -17,8 +17,6 @@ public:
         priorityType = 0;
     }
 
-    void setThread(size_t idx, size_t arrive_time, size_t numBrust){}
-
     // data
     size_t processID;
     size_t numThread;

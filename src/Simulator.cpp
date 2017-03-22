@@ -166,7 +166,7 @@ void Simulator::event_handler(const Event &event) {
 /**
  * Starting from current system, do:
  * 1. take the next event from event tracker
- * 2.
+ * 2. handle that event and finish the round
  */
 void Simulator::advance() {
     Event event = get_next_event();
@@ -182,15 +182,11 @@ void Simulator::advance() {
 }
 
 void Simulator::startSim() {
-    // cout << "choosing scheduler algorithm" << endl << endl;
     choose_scheduling_algorithm();
-    // cout << "loading file" << endl << endl;
     loadFromFile();
-    // cout << "populating New Queue" << endl << endl;
     populateNewQueue();
 
-    while (!eventTracker.empty())
-        advance();
+    while (!eventTracker.empty()) advance();
 
     usage_analysis();
 

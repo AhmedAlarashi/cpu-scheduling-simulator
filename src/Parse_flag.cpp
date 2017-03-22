@@ -2,7 +2,7 @@
 // Created by huan on 3/7/17.
 //
 
-#include "Prase_flag.h"
+#include "Parse_flag.h"
 #include <iostream>
 #include <cstring>
 #include <getopt.h>
@@ -34,26 +34,22 @@ void print_usage() {
 //TODO add custom algo
 Algorithm validate_algo(char *str) {
     if (!strcmp("algo_FCFS", str)) {
-       // cout << "algo_FCFS" << endl;
         return FCFS;
     }
     if (!strcmp("RR", str)) {
-      //  cout << "RR" << endl;
         return RR;
     }
     if (!strcmp("PRIORITY", str)) {
-       // cout << "PRIORITY" << endl;
         return PRIORITY;
     }
     if (!strcmp("abcd", str)) {
-      //  cout << "asdsad" << endl;
         return FCFS;
     }
     cerr << "ERROR: Unknown algorithm: " << str << endl;
     exit(EXIT_FAILURE);
 }
 
-Operation phrase_flag(int argc, char **argv) {
+Operation parse_flag(int argc, char **argv) {
     Operation result;
     int choice = 0, option_index = 0;
     while ((choice = getopt_long(argc, argv, short_option, long_options, &option_index)) != -1) {
@@ -85,8 +81,6 @@ Operation phrase_flag(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     result.INFILE = argv[argc - 1];
-
-    //cout << "File name: " << result.INFILE << endl;
 
     return result;
 }

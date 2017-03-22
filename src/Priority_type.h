@@ -5,13 +5,6 @@
 #ifndef CPU_SCHEDULING_SIMULATOR_PRIORITY_H
 #define CPU_SCHEDULING_SIMULATOR_PRIORITY_H
 
-//enum Priority {
-//    SYSTEM = 0,
-//    INTERACTIVE,
-//    NORMAL,
-//    BATCH,
-//};
-
 #include <cstdlib>
 
 const size_t SYSTEM = 0;

@@ -16,23 +16,16 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <map>
 #include <vector>
 #include <string>
 #include <queue>
-#include "Prase_flag.h"
+#include "Parse_flag.h"
 #include "Process.h"
 #include "Event.h"
 #include "scheduling_algo/Scheduling_algorithm.h"
 #include "scheduling_algo/algo_FCFS.h"
 
 using namespace std;
-
-struct SimNode {
-    size_t ProcessID;
-    size_t ThreadID;
-    size_t EventType;
-};
 
 class Simulator {
 public:

@@ -33,7 +33,7 @@ public:
 
     Event execute(size_t system_time) {
         size_t time = system_time + running_thread->next_CPU_brust(system_time);
-        EventType event  = (running_thread->is_last_brust())? THREAD_COMPLETED : CPU_BRUST_COMPLETED;
+        EventType event = (running_thread->is_last_brust()) ? THREAD_COMPLETED : CPU_BRUST_COMPLETED;
         return Event(time, event, *running_thread);
     }
 

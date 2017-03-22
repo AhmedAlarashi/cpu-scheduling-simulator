@@ -28,6 +28,6 @@ struct Operation {
     }
 };
 
-Operation phrase_flag(int argc, char **argv);
+Operation parse_flag(int argc, char **argv);
 
 #endif //CPU_SCHEDULING_SIMULATOR_PRASE_FLAG_H
