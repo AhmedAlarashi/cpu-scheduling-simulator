@@ -233,7 +233,7 @@ void Simulator::verboseMsg(const Event &event) {
     verbose_buffer << endl << endl;
 
     cout << verbose_buffer.str();
-    verbose_buffer.clear();
+    verbose_buffer.str(string());
 }
 
 void Simulator::normalMsg() {
@@ -276,14 +276,14 @@ void Simulator::normalMsg() {
                   << setw(25) << left << "Total dispatch time:"
                   << setw(7) << right << total_dispatch_time << endl
                   << setw(25) << left << "Total idle time:"
-                  << setw(7) << right << total_idle_time << endl;
+                  << setw(7) << right << total_idle_time << endl << endl;
     normal_buffer << setw(25) << left << "CPU utilization:"
                   << setw(6) << right << CPU_utility * 100 << "%" << endl
                   << setw(25) << left << "CPU efficiency:"
-                  << setw(6) << right << CPU_efficiency * 100 << "%" << endl;
+                  << setw(6) << right << CPU_efficiency * 100 << "%" << endl << endl;
 
     cout << normal_buffer.str();
-    normal_buffer.clear();
+    normal_buffer.str(string());
 }
 
 void Simulator::perthreadMsg() {
@@ -297,9 +297,10 @@ void Simulator::perthreadMsg() {
                               << "TRT: " << setw(5) << left << t.turnaroundTime
                               << "END: " << setw(5) << left << t.finishTime << endl << endl;
         }
+        per_thread_buffer << endl;
     }
     cout << per_thread_buffer.str();
-    per_thread_buffer.clear();
+    per_thread_buffer.str(string());
 }
 
 void Simulator::usage_analysis() {
