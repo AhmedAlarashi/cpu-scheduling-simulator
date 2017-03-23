@@ -12,7 +12,6 @@ using namespace std;
 
 class algo_FCFS : public Scheduling_algorithm {
 public:
-
     void add(Thread *thread) {
         q_.push(thread);
     }

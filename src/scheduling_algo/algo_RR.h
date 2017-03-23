@@ -62,5 +62,4 @@ private:
     const size_t time_quantum = 3;
 };
 
-
 #endif //CPU_SCHEDULING_SIMULATOR_ALGO_RR_H

@@ -6,6 +6,7 @@
 #include "Priority_type.h"
 #include "scheduling_algo/algo_FCFS.h"
 #include "scheduling_algo/algo_RR.h"
+#include "scheduling_algo/algo_PRIORITY.h"
 #include <iomanip>
 
 using namespace std;
@@ -23,13 +24,19 @@ Simulator::Simulator(const Operation opt) {
 
 //TODO: add all algorithms
 void Simulator::choose_scheduling_algorithm() {
-    if (algorithm == Algorithm::FCFS)
-        scheduler = new algo_FCFS;
-    if (algorithm == Algorithm::RR)
-        scheduler = new algo_RR;
-    else {
-        cout << "No matching algorithm provided" << endl;
-        exit(EXIT_FAILURE);
+    switch (algorithm) {
+        case Algorithm::FCFS :
+            scheduler = new algo_FCFS;
+            break;
+        case Algorithm::RR:
+            scheduler = new algo_RR;
+            break;
+        case Algorithm::PRIORITY:
+            scheduler = new algo_PRIORITY;
+            break;
+        default:
+            cout << "No matching algorithm provided" << endl;
+            exit(EXIT_FAILURE);
     }
 }
 
@@ -111,7 +118,6 @@ Event Simulator::get_next_event() {
 }
 
 void Simulator::event_handler(const Event &event) {
-    if (verbose) verboseMsg(event);
     system_time = event.eventTime;
 
     size_t io_brust_time;
@@ -169,6 +175,8 @@ void Simulator::event_handler(const Event &event) {
             eventTracker.push(Event(system_time, eventType, *thread));
             break;
     }
+
+    if (verbose) verboseMsg(event);
 }
 
 /**
