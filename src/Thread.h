@@ -24,6 +24,13 @@ public:
         return brust;
     }
 
+    // if the next cpu brust cannot be run to the end of the brust
+    // this method is called. To add back the time been preempted
+    void time_spend_on_current_brust(size_t time) {
+        brusts[current_brust].cpu -= time;
+        totalCPUTime -= time;
+    }
+
     size_t next_IO_brust() {
         size_t brust = brusts[current_brust].io;
         totalIOTime += brust;

@@ -4,6 +4,8 @@
 
 #include "Simulator.h"
 #include "Priority_type.h"
+#include "scheduling_algo/algo_FCFS.h"
+#include "scheduling_algo/algo_RR.h"
 #include <iomanip>
 
 using namespace std;
@@ -19,9 +21,12 @@ Simulator::Simulator(const Operation opt) {
     last_processID = INT32_MAX;
 }
 
+//TODO: add all algorithms
 void Simulator::choose_scheduling_algorithm() {
     if (algorithm == Algorithm::FCFS)
         scheduler = new algo_FCFS;
+    if (algorithm == Algorithm::RR)
+        scheduler = new algo_RR;
     else {
         cout << "No matching algorithm provided" << endl;
         exit(EXIT_FAILURE);
@@ -141,6 +146,9 @@ void Simulator::event_handler(const Event &event) {
             break;
 
         case THREAD_PREEMPTED:
+            total_service_time += (system_time - thread->lastexecuteTime);
+            has_running_or_scheduled_thread = false;
+            scheduler->add(thread);
             break;
 
         case DISPATCHER_INVOKED:
@@ -220,7 +228,7 @@ void Simulator::verboseMsg(const Event &event) {
             verbose_buffer << "Transitioned from RUNNING to EXIT";
             break;
         case THREAD_PREEMPTED:
-            verbose_buffer << "DSFSDKFJKSDLKL;DSKL;SDLKFD;SKF;SDLKCY";
+            verbose_buffer << "Transitioned from RUNNING to READY";
             break;
         case DISPATCHER_INVOKED:
             verbose_buffer << scheduler->to_string();
