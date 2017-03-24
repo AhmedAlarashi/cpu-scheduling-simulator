@@ -28,7 +28,7 @@ void print_usage() {
     cout << "  \tFCFS: first-come, first-serve (default)" << endl
          << "  \tRR: round-robin scheduler" << endl
          << "  \tPRIORITY: priority scheduler" << endl
-         << "  \tNOT YET IMPLEMENTED" << endl;
+         << "  \tCUSTOM: optimize response time" << endl;
 }
 
 //TODO add custom algo
@@ -42,8 +42,8 @@ Algorithm validate_algo(char *str) {
     if (!strcmp("PRIORITY", str)) {
         return PRIORITY;
     }
-    if (!strcmp("abcd", str)) {
-        return FCFS;
+    if (!strcmp("CUSTOM", str)) {
+        return CUSTOM;
     }
     cerr << "ERROR: Unknown algorithm: " << str << endl;
     exit(EXIT_FAILURE);

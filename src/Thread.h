@@ -28,7 +28,7 @@ public:
     // this method is called. To add back the time been preempted
     void time_spend_on_current_brust(size_t time) {
         brusts[current_brust].cpu -= time;
-        totalCPUTime -= time;
+        totalCPUTime -= brusts[current_brust].cpu;
     }
 
     size_t next_IO_brust() {

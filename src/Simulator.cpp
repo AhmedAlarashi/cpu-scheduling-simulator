@@ -7,6 +7,7 @@
 #include "scheduling_algo/algo_FCFS.h"
 #include "scheduling_algo/algo_RR.h"
 #include "scheduling_algo/algo_PRIORITY.h"
+#include "scheduling_algo/algo_CUSTOM.h"
 #include <iomanip>
 
 using namespace std;
@@ -33,6 +34,9 @@ void Simulator::choose_scheduling_algorithm() {
             break;
         case Algorithm::PRIORITY:
             scheduler = new algo_PRIORITY;
+            break;
+        case Algorithm::CUSTOM:
+            scheduler = new algo_CUSTOM;
             break;
         default:
             cout << "No matching algorithm provided" << endl;
