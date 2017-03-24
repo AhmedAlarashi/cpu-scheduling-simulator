@@ -28,10 +28,9 @@ void print_usage() {
     cout << "  \tFCFS: first-come, first-serve (default)" << endl
          << "  \tRR: round-robin scheduler" << endl
          << "  \tPRIORITY: priority scheduler" << endl
-         << "  \tCUSTOM: optimize response time" << endl;
+         << "  \tCUSTOM: prioritized random scheduling, focus on fairness" << endl;
 }
 
-//TODO add custom algo
 Algorithm validate_algo(char *str) {
     if (!strcmp("FCFS", str)) {
         return FCFS;
