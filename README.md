@@ -3,6 +3,7 @@
 Huan Wang
 
 all source files are in src folder, which contains:
+
   Brust.h // contains data structure for brust
   Event.h // contains event data type
   Parse_flag.h // contains methods to interpret flags
@@ -19,6 +20,7 @@ all source files are in src folder, which contains:
     ... // various implementations
 
 interesting feature:
+
   The implementation of the simulator and the scheduling algorithm are separated. The simulator can work with any scheduling as long as it is the child class of Scheduling_algorithm
 
 Time:
