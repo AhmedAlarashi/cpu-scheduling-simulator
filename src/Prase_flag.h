@@ -5,7 +5,7 @@
 #ifndef CPU_SCHEDULING_SIMULATOR_PRASE_FLAG_H
 #define CPU_SCHEDULING_SIMULATOR_PRASE_FLAG_H
 
-#include <FreeImage.h>
+#include <cstdlib>
 
 enum Algorithm {
     FCFS,
